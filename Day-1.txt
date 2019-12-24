@@ -1,0 +1,88 @@
+Simple SQL SELECT Queries – Practice
+1. Select * from customers;
+
+2. false
+
+3. select PACK_ID,SPEED,MONTHLY_PAYMENT from packages;
+
+4. true
+
+5. true
+
+6. select CUSTOMER_ID,FIRST_NAME,LAST_NAME,MAIN_PHONE_NUM,SECONDARY_PHONE_NUM,PACK_ID from customers; 
+
+7. select FIRST_NAME, LAST_NAME,JOIN_DATE,MONTHLY_DISCOUNT,MONTHLY_DISCOUNT*1.2,MONTHLY_DISCOUNT*0.8 from customers;
+
+8. select PACK_ID,SPEED,STRT_DATE,MONTHLY_PAYMENT,MONTHLY_PAYMENT*12 as YEARLY_PAYMENT from packages;
+
+9. select first_name||' '||last_name as FULL_NAME,MAIN_PHONE_NUM||' '||SECONDARY_PHONE_NUM as CONTACT_DETAILS from customers;
+
+10. select distinct city from customers;
+
+11. select distinct state from  customers;
+
+12. select distinct state,city from customers;
+
+13. select LAST_NAME||' '||STATE as CUSTOMER_AND_STATE from customers;
+
+14. select FIRST_NAME as FN, LAST_NAME as LN, MONTHLY_DISCOUNT as DC, CITY||' '||STREET as FULL_ADDRESS from customers;
+
+15. select distinct MONTHLY_DISCOUNT from customers;
+
+16. select distinct PACK_ID from packages;
+
+
+
+
+
+SQL WHERE Conditions
+
+1. select FIRST_NAME, LAST_NAME,PACK_ID from customers where LAST_NAME= 'KING';
+
+2. select * from packages where SPEED=' 5Mbps' ;
+
+3. select FIRST_NAME,LAST_NAME,PACK_ID,MONTHLY_DISCOUNT from customers where MONTHLY_DISCOUNT<30;
+
+4. select * from customers where JOIN_DATE<'1-JAN-07';
+
+5. select CUSTOMER_ID, FIRST_NAME, STATE, CITY,PACK_ID from customers where PACK_ID in(21,28,14);
+
+6. select CUSTOMER_ID, FIRST_NAME,STATE,CITY,PACK_ID from customers where PACK_ID not in(27,10,3);
+
+7. select LAST_NAME,MAIN_PHONE_NUM,MONTHLY_DISCOUNT,PACK_ID from customers where CUSTOMER_ID in(703,314,560);
+
+8. select FIRST_NAME, MONTHLY_DISCOUNT from customers where FIRST_NAME like'%e';
+
+9. select LAST_NAME, PACK_ID from customers where LAST_NAME like '_d%';
+
+10. select * from customers where REGEXP_LIKE(LAST_NAME,'+[ljh]+') order by MONTHLY_DISCOUNT;
+
+11. select FIRST_NAME,JOIN_DATE,MONTHLY_DISCOUNT,PACK_ID from customers where LAST_NAME not like '%a';
+
+12. select * from customers where PACK_ID is NULL;
+
+13. select FIRST_NAME||' '||LAST_NAME as FULL_NAME , MONTHLY_DISCOUNT from customers where MONTHLY_DISCOUNT not BETWEEN 20 and 30
+order by FULL_NAME;
+
+14. select FIRST_NAME||' '|| LAST_NAME as FULL_NAME, MAIN_PHONE_NUM||' '||STREET as CONTACTS, MONTHLY_DISCOUNT from customers where MONTHLY_DISCOUNT between 11 and 27;
+
+15. select * from customers where (STATE='NEW YORK' and MONTHLY_DISCOUNT between 30 and 40) or (PACK_ID not in (8,19,30) and JOIN_DATE<'01-JAN-07')
+    order by STATE;
+
+16. select LAST_NAME, PACK_ID,BIRTH_DATE from customers where JOIN_DATE between '12-DEC-07' and '17-APR-17';
+
+17. select PACK_ID, STRT_DATE,SPEED from packages where STRT_DATE<'01-Jan-07';
+
+18. select PACK_ID, SPEED, SECTOR_ID from packages where SECTOR_ID='1';
+
+19. select PACK_ID, SPEED, SECTOR_ID from packages where SPEED='5Mbps' or SPEED='10Mbps';
+
+20. select LAST_NAME, MONTHLY_DISCOUNT from customers where CITY='Orlando';
+
+21. select LAST_NAME, PACK_ID from customers where PACK_ID='9' or PACK_ID='18';
+
+    select LAST_NAME, PACK_ID from customers where PACK_ID in (9,18);
+
+22. select FIRST_NAME, MAIN_PHONE_NUM,SECONDARY_PHONE_NUM from customers where SECONDARY_PHONE_NUM is NULL;
+
+23. select FIRST_NAME,MONTHLY_DISCOUNT,PACK_ID from customers where MONTHLY_DISCOUNT is null;
