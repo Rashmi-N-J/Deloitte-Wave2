@@ -1,0 +1,73 @@
+SQL Single-Row Functions_V1
+   String Functions:
+1. select Lower(CUSTOMER_ID), Lower(FIRST_NAME), upper(LAST_NAME)
+   from customers 
+   where CUSTOMER_ID BETWEEN 80 and 150;
+
+2. select FIRST_NAME, LAST_NAME,
+   SUBSTR(FIRST_NAME,1,1)||substr(LAST_NAME,1,3)||'@mymail.com'
+   from customers;
+
+   select LAST_NAME, FIRST_NAME,
+   SUBSTR(FIRST_NAME,1,1)||SUBSTR(LAST_NAME,-3)||'@mymail.com'
+   from customers;
+
+3. select LAST_NAME,
+   length(LAST_NAME)
+   from customers
+   where length(LAST_NAME)>9;
+
+   Numeric Functions:
+1. select FIRST_NAME  from customers;
+
+2. select MONTHLY_DISCOUNT from customers;
+
+3. select MONTHLY_DISCOUNT*1.19 from customers;
+
+4. select ROUND(MONTHLY_DISCOUNT) from customers;
+
+5. select FLOOR(MONTHLY_DISCOUNT) from customers;
+
+6. select CEIL(MONTHLY_DISCOUNT) from customers;
+
+   Conversion Functions:
+1. select CONCAT(FIRST_NAME, TO_CHAR(JOIN_DATE)),
+   CONCAT(LAST_NAME, TO_CHAR(MONTHLY_DISCOUNT))
+   from customers;
+
+2. select LAST_NAME from customers 
+   where REGEXP_LIKE(LAST_NAME,'+[adk]+');
+
+SQL Multi Row Function
+Aggregate Functions
+
+1. select MIN(LAST_NAME) from customers;
+
+2. select AVG(MONTHLY_PAYMENT) as MONTHLY_PAYMENT from packages;
+
+3. select MAX(LAST_NAME) from customers;
+
+4. select count(*) from packages;
+
+5. select count(*) from customers;
+
+6. select count(distinct state)
+   from customers;
+
+7. select count(distinct speed)
+   from packages;
+
+8. select count(FAX)
+   from customers;
+
+9. select count(*)
+   from customers 
+   where FAX is null;
+
+10. select MAX(MONTHLY_DISCOUNT), MIN(MONTHLY_DISCOUNT),AVG(MONTHLY_DISCOUNT)
+    from customers;
+
+GROUP BY AND HAVING CLAUSE:
+11. select state,count(*) from customers
+    group by State;
+
