@@ -16,6 +16,18 @@ SQL Single-Row Functions_V1
    length(LAST_NAME)
    from customers
    where length(LAST_NAME)>9;
+ 
+
+Phone Numbers:
+1. select FIRST_NAME, LAST_NAME, 
+   MAIN_PHONE_NUM,
+   REPLACE (MAIN_PHONE_NUM,'515','$$$') as NEW_PHONE_NUMBER
+   from customers;
+2. select FIRST_NAME, LAST_NAME, 
+   MAIN_PHONE_NUM,
+   REPLACE (SUBSTR(MAIN_PHONE_NUM,1,3),'515','$$$')||
+   SUBSTR(MAIN_PHONE_NUM,4) as NEW_PHONE_NUMBER
+   from customers;
 
    Numeric Functions:
 1. select FIRST_NAME  from customers;
@@ -30,13 +42,65 @@ SQL Single-Row Functions_V1
 
 6. select CEIL(MONTHLY_DISCOUNT) from customers;
 
+   Date Functions:
+1. select FIRST_NAME,LAST_NAME,
+   JOIN_DATE,(JOIN_DATE-10),
+   ADD_MONTHS(JOIN_DATE,1),
+   (SYSDATE-JOIN_DATE)
+   from customers;
+
+2. select FIRST_NAME,BIRTH_DATE,
+   (extract(Year from sysdate)-extract(year from BIRTH_DATE))
+   from customers
+   where (extract(Year from sysdate)-extract(year from BIRTH_DATE))>50 ;
+
+3. select * 
+   from customers
+   where BIRTH_DATE=SYSDATE;
+
+4. select FIRST_NAME, JOIN_DATE,
+   (extract(Year from sysdate)-extract(year from JOIN_DATE))
+   from customers
+   where (extract(Year from sysdate)- extract(year from JOIN_DATE))=10;
+
+
+
+
+
+
    Conversion Functions:
 1. select CONCAT(FIRST_NAME, TO_CHAR(JOIN_DATE)),
    CONCAT(LAST_NAME, TO_CHAR(MONTHLY_DISCOUNT))
    from customers;
 
-2. select LAST_NAME from customers 
-   where REGEXP_LIKE(LAST_NAME,'+[adk]+');
+2. select LAST_NAME, 
+   upper(state)||CUSTOMER_ID,JOIN_DATE||BIRTH_DATE 
+   from customers 
+   where substr(LAST_NAME,1,1) in ('D','K');
+
+
+   Null-Related Functions:
+1. select FIRST_NAME, LAST_NAME,BIRTH_DATE,
+   NVL(MAIN_PHONE_NUM,'N/A'), NVL(SECONDARY_PHONE_NUM,'N/A')
+   from customers
+   where PACK_ID=27;
+
+2. select FIRST_NAME, LAST_NAME,BIRTH_DATE,to_char(BIRTH_DATE,'yyyy'),
+   NVL(MAIN_PHONE_NUM,'N/A'), NVL(SECONDARY_PHONE_NUM,'N/A')
+   from customers
+   where to_char(BIRTH_DATE,'yyyy')='1972';
+
+   Case Function:
+1. select FIRST_NAME,LAST_NAME,MONTHLY_DISCOUNT,
+   (case
+     when MONTHLY_DISCOUNT between 0 and 10 then 'A'
+     when MONTHLY_DISCOUNT between 11 and 20 then 'B'
+     when MONTHLY_DISCOUNT between 21 and 30 then 'C'
+     else  'D'
+   end)GRADE 
+   from customers;
+
+
 
 SQL Multi Row Function
 Aggregate Functions
@@ -71,3 +135,68 @@ GROUP BY AND HAVING CLAUSE:
 11. select state,count(*) from customers
     group by State;
 
+12. select speed, avg(MONTHLY_PAYMENT)
+    from packages
+    group by speed;
+
+13. select state, count(*)
+    from customers
+    group by state; 
+
+14. select SECTOR_ID, Max(MONTHLY_PAYMENT)
+    from packages
+    group by sector_id;
+
+15. select PACK_ID, avg(MONTHLY_DISCOUNT)
+    from customers
+    group by pack_ID;
+
+    select PACK_ID, avg(MONTHLY_DISCOUNT)
+    from customers 
+    where PACK_ID in (22,13)
+    group by pack_ID;
+
+16. select MAX(MONTHLY_PAYMENT),MIN(MONTHLY_PAYMENT),AVG(MONTHLY_PAYMENT)
+    from packages
+    group by speed;
+
+17. select PACK_ID, count(*)
+    from customers
+    group by PACK_ID;
+
+18. select PACK_ID, count(*)
+    from customers
+    where MONTHLY_DISCOUNT>20
+    group by PACK_ID;
+
+19. select PACK_ID, count(*)
+    from customers
+    group by pack_id
+    having count(*)>100;
+
+20. select state,city,count(*)
+    from customers
+    group by state,city;
+
+21. select city, avg(MONTHLY_DISCOUNT)
+    from customers
+    group by city;
+
+    select city, avg(MONTHLY_DISCOUNT)
+    from customers
+    where monthly_discount>20
+    group by city;
+
+22. select state,min(monthly_discount)
+    from customers
+    group by state;
+
+    select state,min(monthly_discount)
+    from customers
+    where monthly_discount>10
+    group by state;
+
+23. select speed,count(*)
+    from packages
+    having count(*)>8
+    group by speed;
