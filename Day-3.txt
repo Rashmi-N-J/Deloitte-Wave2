@@ -1,0 +1,174 @@
+SQL JOIN QueriesV1
+
+1. select c.FIRST_NAME, c.LAST_NAME,
+  p.PACK_ID,p.speed
+  from customers c, packages p
+  where c.PACK_ID=P.PACK_ID;
+
+2. select c.FIRST_NAME, c.LAST_NAME,
+   p.PACK_ID,p.speed
+   from customers c, packages p
+   where c.PACK_ID=P.PACK_ID
+   and p.pack_id in(22,27)
+   order by c.LAST_NAME asc;
+
+3. select customers.PACK_ID, packages.SPEED, 
+   packages.MONTHLY_PAYMENT,sectors.SECTOR_NAME
+   from customers,packages,sectors
+   where customers.PACK_ID= packages.PACK_ID
+   and packages.SECTOR_ID=sectors.SECTOR_ID;
+
+4. select customers.PACK_ID, packages.SPEED, 
+   packages.MONTHLY_PAYMENT,sectors.SECTOR_NAME
+   from customers,packages,sectors
+   where SECTOR_NAME='Business'
+   and customers.PACK_ID= packages.PACK_ID
+   and  packages.SECTOR_ID=sectors.SECTOR_ID;
+
+5. select LAST_NAME,FIRST_NAME,
+   to_char(JOIN_DATE,'yyyy'), c.PACK_ID, p.SPEED,SECTOR_NAME
+   from customers c,packages p,sectors s
+   where SECTOR_NAME='Private'
+   and c.PACK_ID= p.PACK_ID
+   and  p.SECTOR_ID=s.SECTOR_ID
+   and to_char(JOIN_DATE,'yyyy')=2006;
+
+   EQUI-JOIN: 
+6. select p.PACK_ID,p.SPEED,
+   p.MONTHLY_PAYMENT,g.GRADE_NAME
+   from packages p,Pack_grades g
+   where p.MONTHLY_PAYMENT between g.MIN_PRICE and g.MAX_PRICE;
+   
+   OUTER-JOIN:
+7. select c.FIRST_NAME,c.LAST_NAME,
+   p.speed,p.MONTHLY_PAYMENT
+   from customers c join packages p
+   on c.PACK_ID=p.PACK_ID;
+
+8. select c.FIRST_NAME,c.LAST_NAME,c.CUSTOMER_ID,
+   p.speed,p.MONTHLY_PAYMENT
+   from customers c left outer join packages p
+   on c.PACK_ID=p.PACK_ID; 
+
+9. select c.FIRST_NAME,c.LAST_NAME,c.CUSTOMER_ID,p.PACK_ID,
+   p.speed,p.MONTHLY_PAYMENT
+   from customers c right outer join packages p
+   on c.PACK_ID=p.PACK_ID;
+
+10. select c.FIRST_NAME,c.LAST_NAME,c.CUSTOMER_ID,p.PACK_ID,
+    p.speed,p.MONTHLY_PAYMENT
+    from customers c full outer join packages p
+    on c.PACK_ID=p.PACK_ID;
+
+    SELF-JOIN:
+11. select c.LAST_NAME,c.FIRST_NAME,
+    c.PACK_ID
+    from customers c, customers c1
+    where c1.FIRST_NAME='Amado' and c1.LAST_NAME='Taylor'
+    and c.PACK_ID=c1.PACK_ID;
+
+12. select c.LAST_NAME, c.FIRST_NAME,
+    c.MONTHLY_DISCOUNT
+    from customers c,customers c1
+    where c.MONTHLY_DISCOUNT<c1.MONTHLY_DISCOUNT
+    and c1.CUSTOMER_ID='103';
+
+13. select p.PACK_ID,p.speed
+    from packages p,packages p1 
+    where p.speed= p1.speed
+    and p.PACK_ID='10';
+
+
+
+    SQL Nested Queries V1
+1. select FIRST_NAME,LAST_NAME,
+   CITY,STATE 
+   from customers
+   where state=
+        	(select state
+        	from customers 
+        	where customer_id='170');
+
+2. select pack_id,speed,
+   sector_id 
+   from packages
+   where SECTOR_ID=
+            	(select SECTOR_ID
+            	from packages 
+            	where PACK_ID='10');
+
+3. select FIRST_NAME, LAST_NAME, JOIN_DATE
+   from customers
+   where JOIN_DATE>
+            	(select JOIN_DATE 
+            	from customers 
+            	where customer_Id='540');
+
+4. select FIRST_NAME,LAST_NAME,JOIN_DATE,
+   extract(month from JOIN_DATE),extract(year from JOIN_DATE)
+   from customers where extract(month from JOIN_DATE)=
+                        	(select extract(month from JOIN_DATE) 
+                         	from customers 
+                        	where CUSTOMER_ID='372')
+                        	and
+                         	extract(year from JOIN_DATE)=
+                        	(select extract(year from JOIN_DATE) 
+                         	from customers 
+                        	where CUSTOMER_ID='372');
+5. select FIRST_NAME,LAST_NAME,
+   CITY,STATE,PACK_ID 
+   from customers
+   where PACK_ID in
+        	(select pack_id 
+        	from packages
+        	where speed='5Mbps');
+
+6. select PACK_ID,speed,
+   extract(year from STRT_DATE) 
+   from packages where extract(year from STRT_DATE)= 
+                        	(select extract(year from STRT_DATE)
+                        	from packages
+                        	where PACK_ID='7');
+
+7. select FIRST_NAME, MONTHLY_DISCOUNT,
+   PACK_ID, MAIN_PHONE_NUM,SECONDARY_PHONE_NUM
+   from customers
+   where PACK_ID in
+                (select PACK_ID
+                  from packages
+                  where Sector_id =
+                        (select sector_id
+                           from sectors
+                           where sector_name='Business'));
+
+8. select FIRST_NAME, MONTHLY_DISCOUNT,
+   PACK_ID 
+   from customers
+   where PACK_ID in
+            	(select PACK_ID
+                   from packages
+                   where MONTHLY_PAYMENT>
+                        (select avg(MONTHLY_PAYMENT)
+                        from packages));
+
+9. first name, city, state, birthdate and monthly discount 
+   select FIRST_NAME, CITY,
+   STATE, BIRTH_DATE, MONTHLY_DISCOUNT
+   from customers 
+   where BIRTH_DATE =
+                  (select BIRTH_DATE
+                    from customers 
+                    where CUSTOMER_ID=179)
+                    and MONTHLY_DISCOUNT>
+                        (select MONTHLY_DISCOUNT
+                        from customers
+                        where CUSTOMER_ID=107);
+
+10. 
+
+
+
+
+
+
+
