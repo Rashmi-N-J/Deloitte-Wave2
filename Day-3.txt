@@ -164,7 +164,54 @@ SQL JOIN QueriesV1
                         from customers
                         where CUSTOMER_ID=107);
 
-10. 
+10. select * 
+    from packages
+    where SPEED=
+               (select speed 
+               from packages
+               where PACK_ID=30)
+               and
+                  MONTHLY_PAYMENT>
+                 (select MONTHLY_PAYMENT
+                 from packages
+                 where PACK_ID=7);
+
+11. select PACK_ID, speed,
+    MONTHLY_PAYMENT
+    from packages
+    where MONTHLY_PAYMENT>
+            	(select MAX(MONTHLY_PAYMENT) 
+            	from packages 
+            	where speed='5Mbps');
+
+12. select PACK_ID, speed,
+    MONTHLY_PAYMENT
+    from packages
+    where MONTHLY_PAYMENT>
+            	(select MIN(MONTHLY_PAYMENT) 
+            	from packages 
+           	 where speed='5Mbps');
+
+13. select PACK_ID, speed,
+    MONTHLY_PAYMENT
+    from packages
+    where MONTHLY_PAYMENT<
+            	(select MIN(MONTHLY_PAYMENT) 
+            	from packages 
+            	where speed='5Mbps');
+
+14. select FIRST_NAME, MONTHLY_DISCOUNT,
+    PACK_ID from customers
+    where MONTHLY_DISCOUNT<
+        	(select AVG(MONTHLY_DISCOUNT)
+        	from customers)
+        	and
+             	PACK_ID=
+            		(select PACK_ID
+            		from customers
+            		where FIRST_NAME='Kevin');
+                       
+
 
 
 
