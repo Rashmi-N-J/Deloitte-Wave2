@@ -1,0 +1,36 @@
+EXERCISE 7- TABLE CREATION(DDL)
+1.  create table DEPT
+    (ID NUMBER(7) constraint ID Primary key,
+        NAME VARCHAR2(25));
+
+2. 	Insert into DEPT  values (10,'Administration');
+   	Insert into DEPT values (20,'Marketing');
+	Insert into DEPT  values (30,'Purchasing');
+	Insert into DEPT  values (40,'Human Resources');
+	Insert into DEPT values (50,'Shipping');
+	Insert into DEPT values (60,'IT',103,1400);
+	Insert into DEPT  values (70,'Public Relations');
+	Insert into DEPT values (80,'Sales');
+	Insert into DEPT values (90,'Executive');
+	Insert into DEPT values (100,'Finance');
+	Insert into DEPT  values (110,'Accounting');
+	Insert into DEPT values (120,'Treasury',null);
+	Insert into DEPT values (130,'Corporate Tax');
+	Insert into DEPT values (140,'Control And Credit');
+	Insert into DEPT  values (150,'Shareholder Services');
+	Insert into DEPT values (160,'Benefits');
+	Insert into DEPT  values (170,'Manufacturing');
+	Insert into DEPT  values (180,'Construction');
+	Insert into DEPT  values (190,'Contracting');
+
+3. CREATE TABLE EMP
+    (ID NUMBER(7),
+    LAST_NAME VARCHAR2(25),
+    FIRST_NAME VARCHAR2(25),
+    DEPT_ID NUMBER(7), CONSTRAINT DEPT_ID FOREIGN KEY(DEPT_ID) REFERENCES DEPT(ID));
+
+4. ALTER TABLE EMPLOYEES2 READ ONLY;
+
+5. ALTER TABLE EMPLOYEES2 READ WRITE;
+
+6. DROP TABLE EMPLOYEES2;
