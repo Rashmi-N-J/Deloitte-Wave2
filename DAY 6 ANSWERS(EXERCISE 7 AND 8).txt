@@ -1,0 +1,139 @@
+PRACTICE 7
+1. select DEPARTMENT_ID
+   from TBLDEPARTMENTS
+   minus
+   select DEPARTMENT_ID
+   from TBLEMPLOYEES
+   WHERE JOB_ID='SH_CLERK';
+
+2. SELECT COUNTRY_ID,COUNTRY_NAME
+   FROM TBLCOUNTRIES
+   WHERE COUNTRY_ID IN
+             (SELECT COUNTRY_ID
+               FROM TBLLOCATIONS
+               WHERE LOCATION_ID IN
+                    	(SELECT LOCATION_ID
+                   	 FROM TBLDEPARTMENTS))
+
+   MINUS
+
+   SELECT COUNTRY_ID,COUNTRY_NAME
+   FROM TBLCOUNTRIES;
+
+3. SELECT JOB_ID,DEPARTMENT_ID
+   FROM TBLJOB_HISTORY
+
+   MINUS
+
+   SELECT JOB_ID,DEPARTMENT_ID
+   FROM TBLJOB_HISTORY
+   WHERE DEPARTMENT_ID IN
+    	(SELECT DEPARTMENT_ID
+   	 FROM TBLDEPARTMENTS
+   	 WHERE DEPARTMENT_ID IN (10,50,20));
+
+4. SELECT EMPLOYEE_ID,JOB_ID
+   FROM TBLEMPLOYEES
+
+   INTERSECT
+
+   SELECT EMPLOYEE_ID,JOB_ID
+   FROM TBLJOB_HISTORY; 
+
+5. SELECT LAST_NAME,TO_CHAR(NULL)DEPARTMENT_ID
+   FROM TBLEMPLOYEES
+   UNION ALL
+   SELECT TO_CHAR(NULL)DEPARTMENT_ID,DEPARTMENT_NAME
+   FROM TBLDEPARTMENTS;
+    
+
+
+PRACTICE 8
+EXERCISE 7- TABLE CREATION(DDL)
+1.  create table DEPT
+    (ID NUMBER(7) constraint ID Primary key,
+        NAME VARCHAR2(25));
+
+2. 	Insert into DEPT  values (10,'Administration');
+   	Insert into DEPT values (20,'Marketing');
+	Insert into DEPT  values (30,'Purchasing');
+	Insert into DEPT  values (40,'Human Resources');
+	Insert into DEPT values (50,'Shipping');
+	Insert into DEPT values (60,'IT',103,1400);
+	Insert into DEPT  values (70,'Public Relations');
+	Insert into DEPT values (80,'Sales');
+	Insert into DEPT values (90,'Executive');
+	Insert into DEPT values (100,'Finance');
+	Insert into DEPT  values (110,'Accounting');
+	Insert into DEPT values (120,'Treasury',null);
+	Insert into DEPT values (130,'Corporate Tax');
+	Insert into DEPT values (140,'Control And Credit');
+	Insert into DEPT  values (150,'Shareholder Services');
+	Insert into DEPT values (160,'Benefits');
+	Insert into DEPT  values (170,'Manufacturing');
+	Insert into DEPT  values (180,'Construction');
+	Insert into DEPT  values (190,'Contracting');
+
+3. CREATE TABLE EMP
+    (ID NUMBER(7),
+    LAST_NAME VARCHAR2(25),
+    FIRST_NAME VARCHAR2(25),
+    DEPT_ID NUMBER(7), CONSTRAINT DEPT_ID FOREIGN KEY(DEPT_ID) REFERENCES DEPT(ID));
+
+4. CREATE TABLE EMPLOYEES2
+    (ID NUMBER(7),
+     FIRST_NAME VARCHAR2(25),
+     LAST_NAME VARCHAR2(25),
+     SALARY VARCHAR2(5),
+     DEPT_ID NUMBER(7));
+
+5. ALTER TABLE EMPLOYEES2 READ ONLY; 
+
+6. Insert into Employees2 values (198,'Donald','OConnell',2600,50);
+   ERROR:Error report -
+   SQL Error: ORA-12081: update operation not allowed on table "HR2"."EMPLOYEES2"
+
+7. ALTER TABLE EMPLOYEES2 READ WRITE;
+
+8. DROP TABLE EMPLOYEES2;
+
+PRACTICE 1-1:CREATING OTHER SCHEMA OBJECTS
+9. CREATE VIEW EMPLOYEE_VU(EMPLOYEE_ID,EMPLOYEE,DEPT_ID)
+   AS SELECT EMPLOYEE_ID, LAST_NAME,
+   DEPARTMENT_ID
+   FROM TBLEMPLOYEES; 
+
+10. SELECT * FROM EMPLOYEE_VU;
+
+11. CREATE OR REPLACE VIEW EMPLOYEE_VU(EMPLOYEE, DEPARTMENT_ID)
+    AS SELECT FIRST_NAME,DEPARTMENT_ID
+    FROM TBLEMPLOYEES;
+
+    SELECT * FROM EMPLOYEE_VU;
+
+12. CREATE VIEW DEPT50(EMP_NO,EMPLOYEE,DEPTNO)
+    AS SELECT EMPLOYEE_ID,LAST_NAME,DEPARTMENT_ID
+    FROM TBLEMPLOYEES
+    WHERE DEPARTMENT_ID=50
+    WITH CHECK OPTION;
+
+13. DESC DEPT50;
+
+14. CREATE SEQUENCE DEPT_ID_SEQ
+    START WITH 200
+    INCREMENT BY 10
+    MINVALUE 200
+    MAXVALUE 1000
+    CYCLE;
+
+15. CREATE INDEX NAME_IND ON DEPT(NAME);
+
+16. CREATE SYNONYM EMP2 FOR EMPLOYEES;
+
+
+
+
+
+
+
+ 
