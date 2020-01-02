@@ -1,0 +1,61 @@
+1. create table MY_EMPLOYEE
+        (ID NUMBER(4) NOT NULL,
+        LAST_NAME VARCHAR2(25),
+        FIRST_NAME VARCHAR2(25),
+        USERID VARCHAR2(8),
+        SALARY NUMBER(9,2));
+
+2. desc MY_EMPLOYEE;
+
+3. insert into MY_EMPLOYEE(ID,LAST_NAME,FIRST_NAME,USERID,SALARY) values (1,'Patel','Ralph','rpatel',895);
+
+4. insert into MY_EMPLOYEE(ID,LAST_NAME,FIRST_NAME,USERID,SALARY) values (2,'Dancs','Betty','bbiri',860);
+
+5. select * from MY_EMPLOYEE;
+
+6. insert into MY_EMPLOYEE (ID,LAST_NAME,FIRST_NAME,USERID,SALARY) values
+   (&ID,'&LAST_NAME','&FIRST_NAME','&USERID',&SALARY);
+
+7. insert into MY_EMPLOYEE (ID,LAST_NAME,FIRST_NAME,USERID,SALARY) values
+   (&ID,'&LAST_NAME','&FIRST_NAME','&USERID',&SALARY);
+
+8. select * from MY_EMPLOYEE;
+
+9. commit;
+
+10. update MY_EMPLOYEE
+   set LAST_NAME='Drexler'
+   where ID=3;
+
+11. update MY_EMPLOYEE
+    set SALARY=1000
+    where SALARY<900;
+
+12. select * from MY_EMPLOYEE;
+
+13. delete from MY_EMPLOYEE
+    where FIRST_NAME='Betty' and LAST_NAME='Dancs';
+
+14. select * from MY_EMPLOYEE;
+
+15. Commit;
+
+16. insert into MY_EMPLOYEE (ID,LAST_NAME,FIRST_NAME,USERID,SALARY) values
+   (&ID,'&LAST_NAME','&FIRST_NAME','&USERID',&SALARY);
+
+17. select * from MY_EMPLOYEE;
+
+18. savepoint Audrey;
+
+19. Delete from MY_EMPLOYEE;
+
+20. select * from MY_EMPLOYEE;
+
+21. ROLLBACK to Audrey;
+
+22. select * from MY_EMPLOYEE;
+
+23. commit;
+
+
+
