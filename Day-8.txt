@@ -1,0 +1,118 @@
+PL/SQL
+EXERCISE 7
+1. a) create table TOP_SALARY
+   (Salary number(8,2));
+
+   b) declare
+        v_num  number(10):= &n;
+        v_salary TBLEMPLOYEES.SALARY%TYPE;
+        cursor c_sal_emp is
+        select Salary from TBLEMPLOYEES
+        order by Salary desc;
+   
+   c) set serveroutput on;
+      declare
+        	v_num  number(10):= &n;
+        	v_salary TBLEMPLOYEES.SALARY%TYPE;
+        	cursor c_sal_emp is
+        	select Salary from TBLEMPLOYEES
+        	order by Salary desc;
+      begin
+        	open c_sal_emp;
+        	loop
+            	fetch c_sal_emp into v_salary;
+            	exit when (not c_sal_emp%FOUND or c_sal_emp%rowcount=v_num+1);
+            	insert into TOP_SALARY(Salary) values (v_salary);
+            	end loop;
+        	close c_sal_emp;
+	end;
+	/
+
+   d) select * from TOP_SALARY;
+
+   e) Truncate  table TOP_SALARY; 
+
+2. set serveroutput on;
+   declare
+    	v_deptno    number(38,0):=&DEPARTMENT_ID;
+    	cursor c_emp_cursor is
+    	select LAST_NAME,SALARY,MANAGER_ID
+    	from TBLEMPLOYEES
+    	where DEPARTMENT_ID=v_deptno;
+    
+   begin
+    	open c_emp_cursor;
+    	for emp_dep in c_emp_cursor 
+    	loop
+        if emp_dep.SALARY < 5000 and emp_dep.MANAGER_ID in(101,124) then DBMS_OUTPUT.PUT_LINE(emp_dep.LAST_NAME||'Due for Raise'); 
+        else DBMS_OUTPUT.PUT_LINE(emp_dep.LAST_NAME||'Not Due for Raise');
+    	end if;
+    	end loop;
+    	close c_emp_cursor;
+   end;
+   /
+
+3. set serveroutput on;
+   declare
+    	cursor dept_cursor  is 
+    	select DEPARTMENT_ID, DEPARTMENT_NAME
+    	from TBLDEPARTMENTS
+    	where DEPARTMENT_ID<100
+    	order by DEPARTMENT_ID;
+    
+    	cursor emp_cursor(dept_no Number)is
+    	select  LAST_NAME, JOB_ID, HIRE_DATE, SALARY
+    	from TBLEMPLOYEES
+    	where EMPLOYEE_ID<120
+    	and DEPARTMENT_ID=dept_no;
+    
+    	v_dept_id TBLDEPARTMENTS.DEPARTMENT_ID%type;
+    	v_dept_name TBLDEPARTMENTS.DEPARTMENT_NAME%type;
+    
+    	v_last_name TBLEMPLOYEES.LAST_NAME%type;
+    	v_job_id TBLEMPLOYEES.JOB_ID%type;
+    	v_hire_date TBLEMPLOYEES.HIRE_DATE%type;
+    	v_salary TBLEMPLOYEES.SALARY%type;
+    
+   begin
+    	open dept_cursor;
+   
+    	loop
+    	fetch dept_cursor into v_dept_id,v_dept_name;
+    	exit when dept_cursor%NOTFOUND;
+    	DBMS_OUTPUT.PUT_LINE('DEPARTMENT NUMBER:'||v_dept_id||' '|| 'DEPARTMENT_NAME:'||v_dept_name);
+            	open emp_cursor(v_dept_id);
+            	loop
+            	fetch emp_cursor into v_last_name,v_job_id,v_hire_date,v_salary;
+            	exit when emp_cursor%NOTFOUND;
+            	DBMS_OUTPUT.PUT_LINE('LAST_NAME:'||v_last_name||' '||'JOB_ID:'||v_job_id||' '||'HIRE_DATE:'||v_hire_date||' '||'SALARY:'||v_salary);
+            	end loop;
+            	close emp_cursor;
+            	DBMS_OUTPUT.PUT_LINE('----------------------------------------------------------------------------------------------------------------');
+       end loop;
+       close dept_cursor;
+       
+   end;
+   /
+
+
+PRACTICE-6
+1. set serveroutput on;
+   declare
+    	v_country_id TBLCOUNTRIES.COUNTRY_ID%type := 'CA'; 
+    	v_country_record TBLCOUNTRIES%ROWTYPE;
+   begin
+    	select * 
+    	into v_country_record
+    	from TBLCOUNTRIES 
+    	where COUNTRY_ID=v_country_id;
+    	DBMS_OUTPUT.PUT_LINE('COUNTRY_ID:'||v_country_record.COUNTRY_ID||'COUNTRY_NAME:'||v_country_record.COUNTRY_NAME||'REGION_ID:'||v_country_record.REGION_ID);
+   end;
+   /
+
+2. 
+
+
+	
+
+
